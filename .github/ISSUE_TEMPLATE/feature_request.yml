@@ -1,0 +1,23 @@
+name: "✨ Feature Request"
+description: "새로운 기능을 제안합니다."
+labels: ["feature"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: 기능 설명
+      placeholder: 어떤 기능을 추가하고 싶은가요?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: 필요 이유
+      placeholder: 왜 필요한 기능인가요?
+
+  - type: textarea
+    id: detail
+    attributes:
+      label: 상세 내용
+      placeholder: 구체적인 구현 아이디어가 있다면 적어주세요.
