@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Light.woff2")
+    format("woff2");
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Medium.woff2")
+    format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-SemiBold.woff2")
+    format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+
+html {
+  font-family: "Pretendard", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  /* Primary */
+  --primary-100: #e1d6ff;
+  --primary-400: #8357f4;
+  --primary: #4514cb;
+  --primary-dark: #331097;
+
+  /* System Colors */
+  --error: #ff8a90;
+  --warning: #ffe694;
+  --success: #9ce6bb;
+  --information: #a1cdfd;
+
+  /* Gray Scale */
+  --gray-900: #222222;
+  --gray-700: #696969;
+  --gray-500: #989898;
+  --gray-400: #c2c2c4;
+  --gray-200: #e1e1e1;
+  --white: #ffffff;
+
+  --background: #131120;
+  --surface: rgba(34, 34, 34, 0.7);
+
+  /* Typography Scale */
+  --typo-head1-size: 28px;
+  --typo-head1-weight: 700;
+  --typo-head1-line: 1.5;
+
+  --typo-head2-size: 24px;
+  --typo-head2-weight: 700;
+  --typo-head2-line: 1.5;
+
+  --typo-head3-size: 20px;
+  --typo-head3-weight: 700;
+  --typo-head3-line: 1.5;
+
+  --typo-body1-size: 16px;
+  --typo-body1-weight: 500;
+  --typo-body1-line: 1.5;
+
+  --typo-body2-size: 16px;
+  --typo-body2-weight: 400;
+  --typo-body2-line: 1.5;
+
+  --typo-caption-size: 14px;
+  --typo-caption-weight: 400;
+  --typo-caption-line: 1.5;
+
+  --typo-button1-size: 16px;
+  --typo-button1-weight: 700;
+  --typo-button1-line: 1.5;
+
+  --typo-button2-size: 14px;
+  --typo-button2-weight: 700;
+  --typo-button2-line: 1.5;
+
+  /** Layout **/
+  --layout-padding-x: 20px;
+  --layout-padding-y: 32px;
+}
+
+@layer utilities {
+  .typo-head1 {
+    font-size: var(--typo-head1-size);
+    font-weight: var(--typo-head1-weight);
+    line-height: var(--typo-head1-line);
+  }
+  .typo-head2 {
+    font-size: var(--typo-head2-size);
+    font-weight: var(--typo-head2-weight);
+    line-height: var(--typo-head2-line);
+  }
+  .typo-head3 {
+    font-size: var(--typo-head3-size);
+    font-weight: var(--typo-head3-weight);
+    line-height: var(--typo-head3-line);
+  }
+
+  .typo-body1 {
+    font-size: var(--typo-body1-size);
+    font-weight: var(--typo-body1-weight);
+    line-height: var(--typo-body1-line);
+  }
+  .typo-body2 {
+    font-size: var(--typo-body2-size);
+    font-weight: var(--typo-body2-weight);
+    line-height: var(--typo-body2-line);
+  }
+
+  .typo-caption {
+    font-size: var(--typo-caption-size);
+    font-weight: var(--typo-caption-weight);
+    line-height: var(--typo-caption-line);
+  }
+
+  .typo-button1 {
+    font-size: var(--typo-button1-size);
+    font-weight: var(--typo-button1-weight);
+    line-height: var(--typo-button1-line);
+  }
+  .typo-button2 {
+    font-size: var(--typo-button2-size);
+    font-weight: var(--typo-button2-weight);
+    line-height: var(--typo-button2-line);
+  }
+}
