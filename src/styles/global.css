@@ -35,3 +35,25 @@
 html {
   font-family: "Pretendard", ui-sans-serif, system-ui, sans-serif;
 }
+
+:root {
+  /* Primary */
+  --primary-100: #e1d6ff;
+  --primary-400: #8357f4;
+  --primary: #4514cb;
+  --primary-dark: #331097;
+
+  /* System Colors */
+  --error: #ff8a90;
+  --warning: #ffe694;
+  --success: #9ce6bb;
+  --information: #a1cdfd;
+
+  /* Gray Scale */
+  --gray-900: #222222;
+  --gray-700: #696969;
+  --gray-500: #989898;
+  --gray-400: #c2c2c4;
+  --gray-200: #e1e1e1;
+  --white: #ffffff;
+}
