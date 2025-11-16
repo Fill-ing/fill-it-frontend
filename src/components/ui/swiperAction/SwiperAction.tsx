@@ -1,61 +1,122 @@
 import { useEffect, useRef, useState } from "react";
+import { animate, motion, useMotionValue, type Transition } from "framer-motion";
 
 interface SwiperActionProps {
   swiperElement: React.ReactNode[];
 }
 
 const SwiperAction = ({ swiperElement }: SwiperActionProps) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const startX = useRef<number>(0);
-  const startY = useRef<number>(0);
-  const threshold = useRef<number>(0);
+  const springPreset: Transition = {
+    type: "spring",
+    stiffness: 450,
+    damping: 32,
+    mass: 0.3,
+  };
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const elementWidthRef = useRef(0);
+
+  const startX = useRef(0);
+  const startY = useRef(0);
+  const threshold = useRef(0);
+  const isDragging = useRef(false);
+
+  const x = useMotionValue(0);
+  const ELEMENT_GAP = 16;
   useEffect(() => {
     const root = getComputedStyle(document.documentElement);
     const layoutWidth = Number(root.getPropertyValue("--layout-width").replace("px", ""));
     const padding = Number(root.getPropertyValue("--layout-padding-x").replace("px", ""));
-    threshold.current = Math.floor((layoutWidth - 2 * padding) / 2);
+    elementWidthRef.current = trackRef.current?.children[0].clientWidth ?? 0;
+    threshold.current = Math.floor((layoutWidth - 2 * padding) / 5);
   }, []);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const snapToIndex = (diffX: number) => {
+    const moveToLeft = diffX >= threshold.current;
+    const moveToRight = diffX <= -threshold.current;
+
+    if (moveToLeft && currentIndex < swiperElement.length - 1) {
+      const nextIndex = currentIndex + 1;
+      setCurrentIndex(nextIndex);
+      animate(x, -nextIndex * (elementWidthRef.current + ELEMENT_GAP), springPreset);
+      return;
+    }
+    if (moveToRight && currentIndex > 0) {
+      const nextIndex = currentIndex - 1;
+      setCurrentIndex(nextIndex);
+      animate(x, -nextIndex * (elementWidthRef.current + ELEMENT_GAP), springPreset);
+      return;
+    }
+    animate(x, -currentIndex * (elementWidthRef.current + ELEMENT_GAP), springPreset);
+  };
+
   const handlePointerDown = (e: React.PointerEvent) => {
+    if (swiperElement.length === 0) return;
+
+    isDragging.current = true;
     startX.current = e.clientX;
     startY.current = e.clientY;
   };
 
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!isDragging.current) return;
+    if (swiperElement.length === 0) return;
+    if (!trackRef.current) return;
+
+    const diffX = startX.current - e.clientX;
+    x.set(-currentIndex * (elementWidthRef.current + ELEMENT_GAP) - diffX);
+  };
+
   const handlePointerUp = (e: React.PointerEvent) => {
+    if (swiperElement.length === 0) return;
+
+    isDragging.current = false;
+
     const diffX = startX.current - e.clientX;
     const diffY = startY.current - e.clientY;
 
     if (Math.abs(diffY) > Math.abs(diffX)) return;
+    snapToIndex(diffX);
+  };
 
-    if (diffX > threshold.current && currentIndex < swiperElement.length - 1) {
-      setCurrentIndex((prev) => prev + 1);
-      return;
-    }
-    if (diffX < -threshold.current && currentIndex > 0) {
-      setCurrentIndex((prev) => prev - 1);
-      return;
-    }
+  const handlePointerLeave = () => {
+    isDragging.current = false;
+    animate(x, -currentIndex * (elementWidthRef.current + ELEMENT_GAP), springPreset);
   };
 
   return (
     <div
-      className="flex gap-1"
-      ref={ref}
+      className="flex items-center justify-center
+      overflow-hidden
+      touch-none
+      bg-blue-100"
+      ref={containerRef}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
     >
-      {swiperElement[currentIndex]}
+      <motion.div
+        ref={trackRef}
+        className="flex items-center justify-between gap-4 border border-blue-500"
+        style={{ x }}
+      >
+        {swiperElement.map((element, index) => (
+          <div
+            key={index}
+            className="flex
+            min-w-[85%]
+            border-2"
+          >
+            {element}
+          </div>
+        ))}
+      </motion.div>
     </div>
   );
 };
 
 export default SwiperAction;
-
-// 1. 각요소에 pointer 이벤트를 가할 컴포넌트 배열을 받고
-// 2. 그 컴포넌트에 pointer 이벤트를 심고
-// 3. 쓰로틀링으로 이벤트의 횟수를 제한하고
-// 4. 접근성을 위한 가상의 버튼을 넣으면
-// 5. 현재 인덱스를 상위로 반환하는 로직이 필요하다 -> context
