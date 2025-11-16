@@ -94,11 +94,16 @@ html {
   --typo-button2-line: 1.5;
 
   /** Layout **/
-  --layout-padding-x: 20px;
+  --layout-width: 375px;
+  --layout-padding-x: 24px;
   --layout-padding-y: 32px;
 }
 
 @layer utilities {
+  .layout {
+    width: var(--layout-width);
+    padding: var(--layout-padding-y) var(--layout-padding-x);
+  }
   .typo-head1 {
     font-size: var(--typo-head1-size);
     font-weight: var(--typo-head1-weight);
