@@ -92,6 +92,10 @@ html {
   --typo-button2-size: 14px;
   --typo-button2-weight: 700;
   --typo-button2-line: 1.5;
+
+  /** Layout **/
+  --layout-padding-x: 20px;
+  --layout-padding-y: 32px;
 }
 
 @layer utilities {
