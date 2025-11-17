@@ -24,6 +24,7 @@ const SwiperAction = ({ swiperElement }: SwiperActionProps) => {
 
   const x = useMotionValue(0);
   const ELEMENT_GAP = 16;
+
   useEffect(() => {
     const root = getComputedStyle(document.documentElement);
     const layoutWidth = Number(root.getPropertyValue("--layout-width").replace("px", ""));
@@ -34,6 +35,10 @@ const SwiperAction = ({ swiperElement }: SwiperActionProps) => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const calculateLocation = (index: number) => {
+    return -index * (elementWidthRef.current + ELEMENT_GAP);
+  };
+
   const snapToIndex = (diffX: number) => {
     const moveToLeft = diffX >= threshold.current;
     const moveToRight = diffX <= -threshold.current;
@@ -41,16 +46,16 @@ const SwiperAction = ({ swiperElement }: SwiperActionProps) => {
     if (moveToLeft && currentIndex < swiperElement.length - 1) {
       const nextIndex = currentIndex + 1;
       setCurrentIndex(nextIndex);
-      animate(x, -nextIndex * (elementWidthRef.current + ELEMENT_GAP), springPreset);
+      animate(x, calculateLocation(nextIndex), springPreset);
       return;
     }
     if (moveToRight && currentIndex > 0) {
       const nextIndex = currentIndex - 1;
       setCurrentIndex(nextIndex);
-      animate(x, -nextIndex * (elementWidthRef.current + ELEMENT_GAP), springPreset);
+      animate(x, calculateLocation(nextIndex), springPreset);
       return;
     }
-    animate(x, -currentIndex * (elementWidthRef.current + ELEMENT_GAP), springPreset);
+    animate(x, calculateLocation(currentIndex), springPreset);
   };
 
   const handlePointerDown = (e: React.PointerEvent) => {
@@ -67,7 +72,7 @@ const SwiperAction = ({ swiperElement }: SwiperActionProps) => {
     if (!trackRef.current) return;
 
     const diffX = startX.current - e.clientX;
-    x.set(-currentIndex * (elementWidthRef.current + ELEMENT_GAP) - diffX);
+    x.set(calculateLocation(currentIndex) - diffX);
   };
 
   const handlePointerUp = (e: React.PointerEvent) => {
@@ -84,7 +89,7 @@ const SwiperAction = ({ swiperElement }: SwiperActionProps) => {
 
   const handlePointerLeave = () => {
     isDragging.current = false;
-    animate(x, -currentIndex * (elementWidthRef.current + ELEMENT_GAP), springPreset);
+    animate(x, calculateLocation(currentIndex), springPreset);
   };
 
   return (
