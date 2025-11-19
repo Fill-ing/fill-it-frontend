@@ -1,11 +1,15 @@
-import { useEffect, useRef, useState } from "react";
 import { animate, motion, useMotionValue, type Transition } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 interface SwiperActionProps {
+  /** 슬라이드로 전달되는 요소 리스트 */
   swiperElement: React.ReactNode[];
+
+  /** 슬라이드 양옆에 보이게 할 여유 공간 비율(요소 너비 대비) */
+  sidePeekRatio: number;
 }
 
-const SwiperAction = ({ swiperElement }: SwiperActionProps) => {
+const SwiperAction = ({ swiperElement, sidePeekRatio }: SwiperActionProps) => {
   const springPreset: Transition = {
     type: "spring",
     stiffness: 450,
@@ -15,41 +19,61 @@ const SwiperAction = ({ swiperElement }: SwiperActionProps) => {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+
   const elementWidthRef = useRef(0);
+  const containerWidthRef = useRef(0);
 
   const startX = useRef(0);
   const startY = useRef(0);
   const threshold = useRef(0);
   const isDragging = useRef(false);
+  const shouldPreventClick = useRef(false);
 
   const x = useMotionValue(0);
-  const ELEMENT_GAP = 16;
+  const MIN_THRESHOLD = 5;
 
   useEffect(() => {
-    const root = getComputedStyle(document.documentElement);
-    const layoutWidth = Number(root.getPropertyValue("--layout-width").replace("px", ""));
-    const padding = Number(root.getPropertyValue("--layout-padding-x").replace("px", ""));
-    elementWidthRef.current = trackRef.current?.children[0].clientWidth ?? 0;
-    threshold.current = Math.floor((layoutWidth - 2 * padding) / 5);
+    const updateLayout = () => {
+      const root = getComputedStyle(document.documentElement);
+      const layoutWidth = Number(root.getPropertyValue("--layout-width").replace("px", ""));
+      const padding = Number(root.getPropertyValue("--layout-padding-x").replace("px", ""));
+
+      elementWidthRef.current = trackRef.current?.children[0].clientWidth ?? 0;
+      containerWidthRef.current = containerRef.current?.clientWidth ?? 0;
+
+      threshold.current = Math.floor((layoutWidth - 2 * padding) / 5);
+      x.set(calculateLocation(0));
+    };
+    updateLayout();
+
+    window.addEventListener("resize", updateLayout);
+    return () => window.removeEventListener("resize", updateLayout);
   }, []);
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [styleGap, setStyleGap] = useState(0);
 
+  // TODO : 외부에서 조절 가능
   const calculateLocation = (index: number) => {
-    return -index * (elementWidthRef.current + ELEMENT_GAP);
+    const slice = elementWidthRef.current * sidePeekRatio;
+    const gap = (containerWidthRef.current - (elementWidthRef.current + slice * 2)) / 2;
+    const start = gap + slice;
+    setStyleGap(gap);
+    const move = elementWidthRef.current + gap;
+    return Math.floor(start - move * index);
   };
 
   const snapToIndex = (diffX: number) => {
-    const moveToLeft = diffX >= threshold.current;
-    const moveToRight = diffX <= -threshold.current;
+    const ableToMoveLeft = diffX >= threshold.current;
+    const ableToMoveRight = diffX <= -threshold.current;
 
-    if (moveToLeft && currentIndex < swiperElement.length - 1) {
+    if (ableToMoveLeft && currentIndex < swiperElement.length - 1) {
       const nextIndex = currentIndex + 1;
       setCurrentIndex(nextIndex);
       animate(x, calculateLocation(nextIndex), springPreset);
       return;
     }
-    if (moveToRight && currentIndex > 0) {
+    if (ableToMoveRight && currentIndex > 0) {
       const nextIndex = currentIndex - 1;
       setCurrentIndex(nextIndex);
       animate(x, calculateLocation(nextIndex), springPreset);
@@ -73,9 +97,12 @@ const SwiperAction = ({ swiperElement }: SwiperActionProps) => {
 
     const diffX = startX.current - e.clientX;
     const diffY = startY.current - e.clientY;
-    if (diffY > diffX) {
+    if (Math.abs(diffY) > Math.abs(diffX)) {
       isDragging.current = false;
       return;
+    }
+    if (Math.abs(diffX) > MIN_THRESHOLD) {
+      shouldPreventClick.current = true;
     }
     x.set(calculateLocation(currentIndex) - diffX);
   };
@@ -88,18 +115,26 @@ const SwiperAction = ({ swiperElement }: SwiperActionProps) => {
     const diffX = startX.current - e.clientX;
     const diffY = startY.current - e.clientY;
 
+    // 이동 거리가 MIN_THRESHOLD 이하라면 브라우저의 click 이벤트로 처리
+    const isClickEvent = Math.abs(diffX) < MIN_THRESHOLD;
+    if (isClickEvent) return;
+
     if (Math.abs(diffY) > Math.abs(diffX)) return;
+
     snapToIndex(diffX);
+    shouldPreventClick.current = false;
   };
 
   const handlePointerLeave = () => {
     isDragging.current = false;
     animate(x, calculateLocation(currentIndex), springPreset);
+    shouldPreventClick.current = false;
   };
 
   return (
     <div
-      className="flex items-center justify-center
+      className="flex
+      w-[100%]
       overflow-hidden
       touch-none
       bg-blue-100"
@@ -111,15 +146,22 @@ const SwiperAction = ({ swiperElement }: SwiperActionProps) => {
     >
       <motion.div
         ref={trackRef}
-        className="flex items-center justify-between gap-4 border border-blue-500"
-        style={{ x }}
+        className="flex items-center border border-blue-500"
+        style={{ x, gap: styleGap }}
       >
         {swiperElement.map((element, index) => (
           <div
             key={index}
-            className="flex
-            min-w-[85%]
-            border-2"
+            onClick={(e) => {
+              if (shouldPreventClick.current) {
+                e.stopPropagation();
+                return;
+              }
+              console.log("클릭이벤트 동작");
+            }}
+            className="flex justify-center
+            overflow-hidden"
+            style={{ width: "60%" }}
           >
             {element}
           </div>
