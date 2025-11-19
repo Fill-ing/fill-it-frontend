@@ -1,8 +1,26 @@
+import SwiperAction from "./components/ui/swiperAction/SwiperAction";
 import "./styles/global.css";
 
 const App = () => {
   return (
-    <div className="p-10 bg-[var(--primary)] text-white text-2xl font-bold">Tailwind 정상 작동</div>
+    <div onClick={() => console.log("슬라이더 클릭 이벤트")} style={{ width: "320px" }}>
+      <SwiperAction
+        swiperElement={[
+          <div
+            onClick={() => console.log("슬라이더 클릭 이벤트")}
+            style={{ backgroundColor: "#000", width: "200px", height: "100px" }}
+          />,
+          <div
+            onClick={() => console.log("슬라이더 클릭 이벤트")}
+            style={{ backgroundColor: "#000", width: "200px", height: "100px" }}
+          />,
+          <div
+            onClick={() => console.log("슬라이더 클릭 이벤트")}
+            style={{ backgroundColor: "#000", width: "200px", height: "100px" }}
+          />,
+        ]}
+      />
+    </div>
   );
 };
 

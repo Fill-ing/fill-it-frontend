@@ -4,9 +4,8 @@ import { useEffect, useRef, useState } from "react";
 interface SwiperActionProps {
   /** 슬라이드로 전달되는 요소 리스트 */
   swiperElement: React.ReactNode[];
-
   /** 슬라이드 양옆에 보이게 할 여유 공간 비율(요소 너비 대비) */
-  sidePeekRatio: number;
+  sidePeekRatio?: number;
 }
 
 const SwiperAction = ({ swiperElement, sidePeekRatio }: SwiperActionProps) => {
@@ -53,13 +52,15 @@ const SwiperAction = ({ swiperElement, sidePeekRatio }: SwiperActionProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [styleGap, setStyleGap] = useState(0);
 
-  // TODO : 외부에서 조절 가능
   const calculateLocation = (index: number) => {
-    const slice = elementWidthRef.current * sidePeekRatio;
+    const slice = sidePeekRatio ? elementWidthRef.current * sidePeekRatio : 0;
     const gap = (containerWidthRef.current - (elementWidthRef.current + slice * 2)) / 2;
     const start = gap + slice;
+
     setStyleGap(gap);
+
     const move = elementWidthRef.current + gap;
+
     return Math.floor(start - move * index);
   };
 
