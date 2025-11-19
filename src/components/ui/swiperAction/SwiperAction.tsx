@@ -40,7 +40,7 @@ const SwiperAction = ({ swiperElement, sidePeekRatio }: SwiperActionProps) => {
       elementWidthRef.current = trackRef.current?.children[0].clientWidth ?? 0;
       containerWidthRef.current = containerRef.current?.clientWidth ?? 0;
 
-      threshold.current = Math.floor((layoutWidth - 2 * padding) / 5);
+      threshold.current = Math.floor((layoutWidth - 2 * padding) / 20);
       x.set(calculateLocation(0));
     };
     updateLayout();
@@ -118,18 +118,21 @@ const SwiperAction = ({ swiperElement, sidePeekRatio }: SwiperActionProps) => {
 
     // 이동 거리가 MIN_THRESHOLD 이하라면 브라우저의 click 이벤트로 처리
     const isClickEvent = Math.abs(diffX) < MIN_THRESHOLD;
-    if (isClickEvent) return;
-
-    if (Math.abs(diffY) > Math.abs(diffX)) return;
+    if (isClickEvent) {
+      shouldPreventClick.current = false;
+      return;
+    }
+    if (Math.abs(diffY) > Math.abs(diffX)) {
+      shouldPreventClick.current = false;
+      return;
+    }
 
     snapToIndex(diffX);
-    shouldPreventClick.current = false;
   };
 
   const handlePointerLeave = () => {
     isDragging.current = false;
     animate(x, calculateLocation(currentIndex), springPreset);
-    shouldPreventClick.current = false;
   };
 
   return (
@@ -153,7 +156,7 @@ const SwiperAction = ({ swiperElement, sidePeekRatio }: SwiperActionProps) => {
         {swiperElement.map((element, index) => (
           <div
             key={index}
-            onClick={(e) => {
+            onClickCapture={(e) => {
               if (shouldPreventClick.current) {
                 e.stopPropagation();
                 return;

@@ -3,7 +3,7 @@ import "./styles/global.css";
 
 const App = () => {
   return (
-    <div onClick={() => console.log("슬라이더 클릭 이벤트")} style={{ width: "320px" }}>
+    <div style={{ width: "320px" }}>
       <SwiperAction
         swiperElement={[
           <div
