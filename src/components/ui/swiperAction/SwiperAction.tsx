@@ -34,13 +34,12 @@ const SwiperAction = ({ swiperElement, sidePeekRatio }: SwiperActionProps) => {
   useEffect(() => {
     const updateLayout = () => {
       const root = getComputedStyle(document.documentElement);
-      const layoutWidth = Number(root.getPropertyValue("--layout-width").replace("px", ""));
       const padding = Number(root.getPropertyValue("--layout-padding-x").replace("px", ""));
 
       elementWidthRef.current = trackRef.current?.children[0].clientWidth ?? 0;
       containerWidthRef.current = containerRef.current?.clientWidth ?? 0;
 
-      threshold.current = Math.floor((layoutWidth - 2 * padding) / 20);
+      threshold.current = Math.floor((containerWidthRef.current - 2 * padding) / 20);
       x.set(calculateLocation(0));
     };
     updateLayout();

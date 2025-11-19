@@ -3,7 +3,7 @@ import "./styles/global.css";
 
 const App = () => {
   return (
-    <div style={{ width: "320px" }}>
+    <div style={{ width: "100%" }}>
       <SwiperAction
         swiperElement={[
           <div
