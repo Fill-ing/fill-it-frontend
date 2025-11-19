@@ -72,6 +72,11 @@ const SwiperAction = ({ swiperElement }: SwiperActionProps) => {
     if (!trackRef.current) return;
 
     const diffX = startX.current - e.clientX;
+    const diffY = startY.current - e.clientY;
+    if (diffY > diffX) {
+      isDragging.current = false;
+      return;
+    }
     x.set(calculateLocation(currentIndex) - diffX);
   };
 
