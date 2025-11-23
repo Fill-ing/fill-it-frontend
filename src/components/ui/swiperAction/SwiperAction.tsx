@@ -31,6 +31,7 @@ const SwiperAction = ({ swiperElement, sidePeekRatio }: SwiperActionProps) => {
 
   const x = useMotionValue(0);
   const MIN_THRESHOLD = 5;
+  const STANDARD = 5;
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: 첫 마운트시에만 계산
   useEffect(() => {
@@ -41,7 +42,7 @@ const SwiperAction = ({ swiperElement, sidePeekRatio }: SwiperActionProps) => {
       elementWidthRef.current = trackRef.current?.children[0].clientWidth ?? 0;
       containerWidthRef.current = containerRef.current?.clientWidth ?? 0;
 
-      threshold.current = Math.floor((containerWidthRef.current - 2 * padding) / 20);
+      threshold.current = Math.floor((containerWidthRef.current - 2 * padding) / STANDARD);
       x.set(calculateLocation(0));
     };
     updateLayout();
