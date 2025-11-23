@@ -21,15 +21,15 @@ export const Cover = styled.img`
   object-fit: cover;
   aspect-ratio: 1 / 1;
   -webkit-user-drag: none; 
-  flex-shrink: 0;
 `;
 
 export const Content = styled.div`
   display: flex;
   flex: 1;
-  width: 100%;
   height: 100%;
   padding: 12px;
+  min-width:0;
+  gap: 8px;
 `;
 
 export const Info = styled.div`
@@ -38,6 +38,7 @@ export const Info = styled.div`
   flex: 1;
   height: 100%;
   justify-content: space-between;
+  min-width: 0;
 `;
 
 export const Title = styled.h3`
