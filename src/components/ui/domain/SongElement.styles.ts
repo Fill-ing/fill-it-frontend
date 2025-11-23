@@ -20,7 +20,8 @@ export const Cover = styled.img`
   height: 80px;
   object-fit: cover;
   aspect-ratio: 1 / 1;
-  -webkit-user-drag: none;      
+  -webkit-user-drag: none; 
+  flex-shrink: 0;
 `;
 
 export const Content = styled.div`
@@ -42,11 +43,17 @@ export const Info = styled.div`
 export const Title = styled.h3`
 ${({ theme }) => ({ ...theme.typography.body1 })};
   color: ${({ theme }) => theme.colors.white};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Artist = styled.p`
   ${({ theme }) => ({ ...theme.typography.body2 })};
   color: ${({ theme }) => theme.colors.gray400};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Actions = styled.div`

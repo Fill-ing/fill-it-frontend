@@ -18,8 +18,7 @@ export const Slide = styled.div`
   display: flex;
   justify-content: center;
   overflow: hidden;
-  width: 100%;
   flex-shrink: 0;
-  max-width: ${({ theme }) => theme.layout.width};
-  user-select: none;            
+  user-select: none;  
+  width: ${({ theme }) => `calc(${theme.layout.width} - ${theme.layout.paddingX} * 2)`}       
 `;
