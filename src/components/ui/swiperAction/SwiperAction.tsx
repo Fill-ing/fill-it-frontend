@@ -1,5 +1,5 @@
-import { animate, motion, useMotionValue, type Transition } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { animate, motion, useMotionValue, type Transition } from "framer-motion";
 
 interface SwiperActionProps {
   /** 슬라이드로 전달되는 요소 리스트 */
@@ -31,6 +31,7 @@ const SwiperAction = ({ swiperElement, sidePeekRatio }: SwiperActionProps) => {
   const x = useMotionValue(0);
   const MIN_THRESHOLD = 5;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: 첫 마운트시에만 계산
   useEffect(() => {
     const updateLayout = () => {
       const root = getComputedStyle(document.documentElement);
@@ -154,13 +155,13 @@ const SwiperAction = ({ swiperElement, sidePeekRatio }: SwiperActionProps) => {
       >
         {swiperElement.map((element, index) => (
           <div
+            //biome-ignore lint/suspicious/noArrayIndexKey : index 제외 key값 부재
             key={index}
             onClickCapture={(e) => {
               if (shouldPreventClick.current) {
                 e.stopPropagation();
                 return;
               }
-              console.log("클릭이벤트 동작");
             }}
             className="flex justify-center
             overflow-hidden"
