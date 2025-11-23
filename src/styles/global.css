@@ -36,6 +36,10 @@ html {
   font-family: "Pretendard", ui-sans-serif, system-ui, sans-serif;
 }
 
+button {
+  cursor: pointer;
+}
+
 :root {
   /* Primary */
   --primary-100: #e1d6ff;
@@ -146,5 +150,15 @@ html {
     font-size: var(--typo-button2-size);
     font-weight: var(--typo-button2-weight);
     line-height: var(--typo-button2-line);
+  }
+
+  .text-primary {
+    color: var(--white);
+  }
+  .text-secondary {
+    color: var(--gray-400);
+  }
+  .background {
+    background-color: rgba(34, 34, 34, 0.7);
   }
 }
