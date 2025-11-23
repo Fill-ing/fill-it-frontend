@@ -1,27 +1,7 @@
-import SwiperAction from "./components/ui/swiperAction/SwiperAction";
 import "./styles/global.css";
 
 const App = () => {
-  return (
-    <div style={{ width: "100%" }}>
-      <SwiperAction
-        swiperElement={[
-          <div
-            onClick={() => console.log("슬라이더 클릭 이벤트")}
-            style={{ backgroundColor: "#000", width: "200px", height: "100px" }}
-          />,
-          <div
-            onClick={() => console.log("슬라이더 클릭 이벤트")}
-            style={{ backgroundColor: "#000", width: "200px", height: "100px" }}
-          />,
-          <div
-            onClick={() => console.log("슬라이더 클릭 이벤트")}
-            style={{ backgroundColor: "#000", width: "200px", height: "100px" }}
-          />,
-        ]}
-      />
-    </div>
-  );
+  return <h2>App</h2>;
 };
 
 export default App;
