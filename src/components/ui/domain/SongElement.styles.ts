@@ -64,7 +64,7 @@ export const Actions = styled.div`
   justify-content: space-between;
 `;
 
-export const DragHandle = styled.div`
+export const DragHandle = styled.button`
   cursor: grab;
 
   &:active {
