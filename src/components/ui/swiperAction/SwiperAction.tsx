@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { animate, motion, useMotionValue, type Transition } from "framer-motion";
+import { animate, useMotionValue, type Transition } from "framer-motion";
+import * as S from "./SwiperAction.styles";
 
 interface SwiperActionProps {
   /** 슬라이드로 전달되는 요소 리스트 */
@@ -136,26 +137,17 @@ const SwiperAction = ({ swiperElement, sidePeekRatio }: SwiperActionProps) => {
   };
 
   return (
-    <div
-      className="flex
-      w-[100%]
-      overflow-hidden
-      touch-none
-      bg-blue-100"
+    <S.Container
       ref={containerRef}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
     >
-      <motion.div
-        ref={trackRef}
-        className="flex items-center border border-blue-500"
-        style={{ x, gap: styleGap }}
-      >
+      <S.Track ref={trackRef} style={{ x, gap: styleGap }}>
         {swiperElement.map((element, index) => (
-          <div
-            //biome-ignore lint/suspicious/noArrayIndexKey : index 제외 key값 부재
+          <S.Slide
+            // biome-ignore lint/suspicious/noArrayIndexKey: 현재로썬 index만 사용 가능함
             key={index}
             onClickCapture={(e) => {
               if (shouldPreventClick.current) {
@@ -163,15 +155,12 @@ const SwiperAction = ({ swiperElement, sidePeekRatio }: SwiperActionProps) => {
                 return;
               }
             }}
-            className="flex justify-center
-            overflow-hidden"
-            style={{ width: "60%" }}
           >
             {element}
-          </div>
+          </S.Slide>
         ))}
-      </motion.div>
-    </div>
+      </S.Track>
+    </S.Container>
   );
 };
 

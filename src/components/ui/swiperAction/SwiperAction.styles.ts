@@ -1,0 +1,22 @@
+import styled from "@emotion/styled";
+import { motion } from "framer-motion";
+
+export const Container = styled.div`
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  touch-action: none;
+  background-color: ${({ theme }) => theme.colors.background}
+`;
+
+export const Track = styled(motion.div)`
+  display: flex;
+  align-items: center;
+`;
+
+export const Slide = styled.div`
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  width: 60%;
+`;

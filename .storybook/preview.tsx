@@ -1,18 +1,17 @@
+import { ThemeProvider } from "@emotion/react";
 import type { Preview } from "@storybook/react-vite";
-import "../src/styles/global.css";
 import React from "react";
+import theme from "../src/styles/theme";
+import GlobalStyles from "../src/styles/globalStyles";
 
 export const decorators = [
   (Story) => (
-    <div
-      style={{
-        background: "var(--background)",
-        paddingLeft: "var(--layout-padding-x)",
-        paddingRight: "var(--layout-padding-y)",
-      }}
-    >
-      <Story />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div style={{ backgroundColor: "#131120", height: "100vh" }}>
+        <GlobalStyles />
+        <Story />
+      </div>
+    </ThemeProvider>
   ),
 ];
 

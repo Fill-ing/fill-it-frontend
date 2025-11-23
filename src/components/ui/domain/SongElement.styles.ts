@@ -1,0 +1,65 @@
+import styled from "@emotion/styled";
+import { hexToRgba } from "../../../utils/hexToRgba";
+
+export const Wrapper = styled.article`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background-color: ${({ theme }) => hexToRgba(theme.colors.gray900, 0.7)};
+  overflow: hidden;
+`;
+
+export const Cover = styled.img`
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+`;
+
+export const Content = styled.div`
+  display: flex;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+`;
+
+export const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  justify-content: space-between;
+`;
+
+export const Title = styled.h3`
+${({ theme }) => ({ ...theme.typography.body1 })};
+  color: ${({ theme }) => theme.colors.white};
+`;
+
+export const Artist = styled.p`
+  ${({ theme }) => ({ ...theme.typography.body2 })};
+  color: ${({ theme }) => theme.colors.gray400};
+`;
+
+export const Actions = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+`;
+
+export const DragHandle = styled.div`
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+`;
+
+export const Icon = styled.span`
+  font-size: 20px;
+  color: ${({ theme }) => theme.colors.gray400}
+`;

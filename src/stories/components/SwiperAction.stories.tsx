@@ -1,5 +1,5 @@
-import SwiperAction from "../../components/ui/swiperAction/SwiperAction";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import SwiperAction from "../../components/ui/swiperAction/SwiperAction";
 
 const meta: Meta<typeof SwiperAction> = {
   title: "Component/SwiperAction",
