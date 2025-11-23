@@ -1,8 +1,8 @@
 import { ThemeProvider } from "@emotion/react";
 import type { Preview } from "@storybook/react-vite";
 import React from "react";
-import theme from "../src/styles/theme";
-import GlobalStyles from "../src/styles/globalStyle";
+import theme from "../src/styles/globals/theme";
+import GlobalStyles from "../src/styles/globals/globalStyle";
 
 export const decorators = [
   (Story) => (
