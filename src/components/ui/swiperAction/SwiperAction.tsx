@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { animate, useMotionValue, type Transition } from "framer-motion";
 import * as S from "./SwiperAction.styles";
+import { VisuallyHidden } from "../../../styles/VisuallyHidden";
 
 interface SwiperActionProps {
   /** 슬라이드로 전달되는 요소 리스트 */
@@ -66,6 +67,10 @@ const SwiperAction = ({ swiperElement, sidePeekRatio }: SwiperActionProps) => {
     return Math.floor(start - move * index);
   };
 
+  const updateLocation = (index: number) => {
+    animate(x, calculateLocation(index), springPreset);
+  };
+
   const snapToIndex = (diffX: number) => {
     const ableToMoveLeft = diffX >= threshold.current;
     const ableToMoveRight = diffX <= -threshold.current;
@@ -83,6 +88,20 @@ const SwiperAction = ({ swiperElement, sidePeekRatio }: SwiperActionProps) => {
       return;
     }
     animate(x, calculateLocation(currentIndex), springPreset);
+  };
+
+  const moveToRight = () => {
+    const next = currentIndex + 1;
+    if (next >= swiperElement.length) return;
+    setCurrentIndex(next);
+    updateLocation(next);
+  };
+
+  const moveToLeft = () => {
+    const prev = currentIndex - 1;
+    if (prev < 0) return;
+    setCurrentIndex(prev);
+    updateLocation(prev);
   };
 
   const handlePointerDown = (e: React.PointerEvent) => {
@@ -145,6 +164,14 @@ const SwiperAction = ({ swiperElement, sidePeekRatio }: SwiperActionProps) => {
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
     >
+      {currentIndex !== 0 && (
+        <VisuallyHidden
+          tabIndex={0}
+          aria-label="이전으로 이동"
+          aria-hidden={currentIndex === 0}
+          onClick={moveToLeft}
+        />
+      )}
       <S.Track ref={trackRef} style={{ x, gap: styleGap }}>
         {swiperElement.map((element, index) => (
           <S.Slide
@@ -156,11 +183,20 @@ const SwiperAction = ({ swiperElement, sidePeekRatio }: SwiperActionProps) => {
                 return;
               }
             }}
+            aria-hidden={currentIndex !== index}
           >
             {element}
           </S.Slide>
         ))}
       </S.Track>
+      {currentIndex !== swiperElement.length - 1 && (
+        <VisuallyHidden
+          tabIndex={0}
+          aria-label="다음으로 이동"
+          aria-hidden={currentIndex === swiperElement.length - 1}
+          onClick={moveToRight}
+        />
+      )}
     </S.Container>
   );
 };
