@@ -9,6 +9,10 @@ export const Wrapper = styled.article`
   border-radius: 8px;
   background-color: ${({ theme }) => hexToRgba(theme.colors.gray900, 0.7)};
   overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 `;
 
 export const Cover = styled.img`
@@ -16,6 +20,7 @@ export const Cover = styled.img`
   height: 80px;
   object-fit: cover;
   aspect-ratio: 1 / 1;
+  -webkit-user-drag: none;      
 `;
 
 export const Content = styled.div`

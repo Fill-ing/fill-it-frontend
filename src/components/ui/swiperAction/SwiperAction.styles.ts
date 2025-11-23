@@ -6,7 +6,7 @@ export const Container = styled.div`
   width: 100%;
   overflow: hidden;
   touch-action: none;
-  background-color: ${({ theme }) => theme.colors.background}
+  background-color: ${({ theme }) => theme.colors.background};
 `;
 
 export const Track = styled(motion.div)`
@@ -18,5 +18,8 @@ export const Slide = styled.div`
   display: flex;
   justify-content: center;
   overflow: hidden;
-  width: 60%;
+  width: 100%;
+  flex-shrink: 0;
+  max-width: ${({ theme }) => theme.layout.width};
+  user-select: none;            
 `;
