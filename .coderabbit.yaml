@@ -8,9 +8,9 @@ reviews:
   suggested_reviewers: false
   # 리뷰에 포함할 파일 경로
   path_filters:
-    - src/**
-    - !dist/**
-    - !node_modules
+    - 'src/**'
+    - '!dist/**'
+    - '!node_modules'
 
 auto_review:
   # PR 생성 시 자동 리뷰 기능을 활성화
