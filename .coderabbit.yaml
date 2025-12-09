@@ -1,0 +1,17 @@
+# 리뷰어의 기본 성격 설정
+profile: balanced
+
+# PR 전체에 대한 요약 코멘트 없도록 (PR이 장황해지는 것 방지)
+high_level_summary: false
+
+# 코드에 대한 피드백 스타일 설정 (선택 사항)
+review_style: focus_on_critical
+
+# 코멘트 자체를 상세하게 남길지 여부
+review_comment_style: verbose
+
+auto_review:
+  # PR 생성 시 자동 리뷰 기능을 활성화
+  enabled: true 
+  # 첫 푸시에만 리뷰하도록 설정
+  auto_incremental_review: false
