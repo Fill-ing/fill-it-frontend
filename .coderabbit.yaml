@@ -1,0 +1,19 @@
+# 리뷰 언어 설정
+language: "ko-KR"
+
+reviews: 
+  # PR 전체에 대한 요약 코멘트 없도록 (PR이 장황해지는 것 방지)
+  high_level_summary: false
+  # 리뷰어 자동 추천 비활성화
+  suggested_reviewers: false
+  # 리뷰에 포함할 파일 경로
+  path_filters:
+    - src/**
+    - !dist/**
+    - !node_modules
+
+  auto_review:
+    # PR 생성 시 자동 리뷰 기능을 활성화
+    enabled: true 
+    # 첫 푸시에만 리뷰하도록 설정 - 필요할 때 명령어를 통한 수동 리뷰
+    auto_incremental_review: false
