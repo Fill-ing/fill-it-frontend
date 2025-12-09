@@ -6,8 +6,3 @@ reviews:
   high_level_summary: false
   # 리뷰어 자동 추천 비활성화
   suggested_reviewers: false
-  # 리뷰에 포함할 파일 경로
-  path_filters:
-    - 'src/**'
-    - '!dist/**'
-    - '!node_modules'
