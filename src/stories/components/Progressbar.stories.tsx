@@ -24,13 +24,6 @@ export default meta;
 
 type Story = StoryObj<typeof Progressbar>;
 
-export const Default: Story = {
-  args: {
-    totalSteps: 5,
-    currentStep: 1,
-  },
-};
-
 export const FirstStep: Story = {
   args: {
     totalSteps: 5,
