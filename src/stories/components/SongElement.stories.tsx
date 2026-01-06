@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import SongElement from "../../components/ui/domain/SongElement";
+import SongElement from "../../components/domain/SongElement";
 
 const meta: Meta<typeof SongElement> = {
   title: "Component/SongElement",
