@@ -53,6 +53,6 @@ export const BeatedCircle = styled(motion.div)`
 
 export const Line = styled.div`
   height: 1px;
-  flex:1;
+  flex: 1;
   background-color: ${({ theme }) => theme.colors.gray500};
 `;
