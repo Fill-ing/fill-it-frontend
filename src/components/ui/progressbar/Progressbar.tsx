@@ -11,7 +11,7 @@ interface ProgressbarProps {
 }
 
 const logProgressWarning = (totalSteps: number, currentStep: number) => {
-  if (import.meta.env.VITE_MODE === "development") {
+  if (import.meta.env.DEV) {
     if (totalSteps < 1) {
       console.warn(`Progressbar: totalSteps는 1 이상이어야 합니다. (받은 값: ${totalSteps})`);
     }
