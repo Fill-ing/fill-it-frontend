@@ -1,38 +1,7 @@
 import styled from "@emotion/styled";
-import type { CSSObject } from "@emotion/react";
+import { hexToRgba } from "../../../utils/hexToRgba";
 
 type InputVariant = "default" | "error" | "success";
-
-const getVariantStyles = (
-  variant: InputVariant,
-  colors: Record<string, string>,
-): CSSObject => {
-  const styles: Record<InputVariant, CSSObject> = {
-    default: {
-      borderColor: colors.gray500,
-      "&:focus": {
-        borderColor: colors.primary,
-        outline: "none",
-      },
-    },
-    error: {
-      borderColor: colors.error,
-      "&:focus": {
-        borderColor: colors.error,
-        outline: "none",
-      },
-    },
-    success: {
-      borderColor: colors.success,
-      "&:focus": {
-        borderColor: colors.success,
-        outline: "none",
-      },
-    },
-  };
-
-  return styles[variant];
-};
 
 export const Wrapper = styled.div`
   display: flex;
@@ -55,25 +24,31 @@ export const RequiredMark = styled.span`
 
 export const InputField = styled.input<{ variant: InputVariant }>`
   width: 100%;
-  padding: 12px 16px;
+  padding: 12px 8px;
   border-radius: 8px;
-  border: 1px solid;
-  background-color: transparent;
-  font-size: ${({ theme }) => theme.typography.body2.size};
-  font-weight: ${({ theme }) => theme.typography.body2.weight};
-  line-height: ${({ theme }) => theme.typography.body2.lineHeight};
+  border: none;
+  background-color: ${({ theme }) => hexToRgba(theme.colors.gray900, 0.7)};
+  font-size: ${({ theme }) => theme.typography.body1.size};
+  font-weight: ${({ theme }) => theme.typography.body1.weight};
+  line-height: ${({ theme }) => theme.typography.body1.lineHeight};
+  letter-spacing: -0.4px;
   color: ${({ theme }) => theme.colors.white};
-  transition: border-color 0.2s ease;
 
-  ${({ theme, variant }) => getVariantStyles(variant, theme.colors)};
+  &:focus {
+    outline: ${({ theme, variant }) => {
+      if (variant === "error") return `2px solid ${theme.colors.error}`;
+      if (variant === "success") return `2px solid ${theme.colors.success}`;
+      return `2px solid ${theme.colors.primary}`;
+    }};
+    outline-offset: -2px;
+  }
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray500};
   }
 
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.gray900};
-    color: ${({ theme }) => theme.colors.gray500};
+    opacity: 0.5;
     cursor: not-allowed;
   }
 `;
