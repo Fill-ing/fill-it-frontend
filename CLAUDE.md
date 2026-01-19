@@ -326,6 +326,29 @@ npx @biomejs/biome format .    # 포맷팅
 npx @biomejs/biome check --write .  # 자동 수정
 ```
 
+### Figma 디자인 구현 (MCP 연동)
+Figma MCP를 통해 디자인을 코드로 변환할 수 있습니다.
+
+#### URL 형식
+```
+https://figma.com/design/:fileKey/:fileName?node-id=:nodeId
+```
+
+#### 구현 프로세스
+1. **Figma URL 제공**: 구현할 컴포넌트의 Figma URL 전달
+2. **디자인 컨텍스트 조회**: MCP를 통해 디자인 정보, 스타일, 에셋 URL 추출
+3. **컴포넌트 구현**: 프로젝트 컨벤션에 맞게 코드 생성
+   - `Component.tsx` + `Component.styles.ts` 분리
+   - Emotion styled components 사용
+   - 접근성(a11y) 속성 포함
+4. **Storybook 스토리 작성**: 다양한 상태의 Story 생성
+
+#### 사용 가능한 MCP 도구
+- `get_design_context`: 디자인 정보 및 코드 생성
+- `get_screenshot`: 노드 스크린샷 생성
+- `get_variable_defs`: 디자인 변수(색상, 폰트 등) 조회
+- `get_metadata`: 노드 구조 메타데이터 조회
+
 ## 주요 라이브러리 사용법
 
 ### Emotion Styled Components

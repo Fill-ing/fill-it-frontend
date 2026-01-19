@@ -7,7 +7,7 @@ import GlobalStyle from "../src/styles/globals/globalStyle";
 export const decorators = [
   (Story) => (
     <ThemeProvider theme={theme}>
-      <div style={{ backgroundColor: "#222222", height: "100w" }}>
+      <div style={{ backgroundColor: theme.colors.background, height: "100w" }}>
         <GlobalStyle />
         <Story />
       </div>
