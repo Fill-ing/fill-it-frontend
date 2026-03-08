@@ -10,7 +10,7 @@ export const Button = styled.button<{ variant: SquareButtonVariant }>`
   gap: 12px;
   width: 128px;
   height: 128px;
-  padding: 20px 0;
+  padding: 20px 24px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
