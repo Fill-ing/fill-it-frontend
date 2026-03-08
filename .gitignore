@@ -29,5 +29,5 @@ storybook-static
 .env.development
 .env.production
 
-/coverage
+coverage/
 .claude/

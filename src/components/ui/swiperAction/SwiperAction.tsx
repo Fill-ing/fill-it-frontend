@@ -1,7 +1,7 @@
+import { animate, type Transition, useMotionValue } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { animate, useMotionValue, type Transition } from "framer-motion";
-import * as S from "./SwiperAction.styles";
 import { VisuallyHidden } from "../../../styles/VisuallyHidden";
+import * as S from "./SwiperAction.styles";
 
 interface SwiperActionProps {
   /** 슬라이드로 전달되는 요소 리스트 */
