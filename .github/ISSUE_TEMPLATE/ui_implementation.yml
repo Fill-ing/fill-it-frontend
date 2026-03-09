@@ -20,11 +20,12 @@ body:
         - 코드 + 테스트
         - 코드 + 테스트 + 스토리북
 
-  - type: input
+  - type: textarea
     id: figma
     attributes:
       label: Figma URL
-      placeholder: "https://figma.com/design/:fileKey/:fileName?node-id=:nodeId"
+      description: "variant별로 한 줄씩 작성 (예: primary: URL)"
+      placeholder: "primary: https://figma.com/design/:fileKey/:fileName?node-id=:nodeId"
     validations:
       required: false
 
