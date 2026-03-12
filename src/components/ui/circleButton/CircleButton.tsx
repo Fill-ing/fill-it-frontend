@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { MouseEventHandler, ReactNode } from "react";
 import * as S from "./CircleButton.styles";
 
 interface CircleButtonProps {
@@ -7,12 +7,12 @@ interface CircleButtonProps {
   /** 버튼 내부 아이콘 */
   icon: ReactNode;
   /** 접근성 레이블 */
-  ariaLabel: string;
+  "aria-label": string;
   /** 클릭 이벤트 */
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
-const CircleButton = ({ backgroundColor, icon, ariaLabel, onClick }: CircleButtonProps) => {
+const CircleButton = ({ backgroundColor, icon, "aria-label": ariaLabel, onClick }: CircleButtonProps) => {
   return (
     <S.Button
       backgroundColor={backgroundColor}

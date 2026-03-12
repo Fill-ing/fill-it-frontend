@@ -48,7 +48,7 @@ const meta: Meta<typeof CircleButton> = {
       description: "버튼 내부 아이콘 (ReactNode)",
       control: false,
     },
-    ariaLabel: {
+    "aria-label": {
       control: "text",
       description: "접근성 레이블",
     },
@@ -74,7 +74,7 @@ export const KakaoButton: Story = {
   args: {
     backgroundColor: "#fee500",
     icon: <KakaoIcon />,
-    ariaLabel: "카카오톡으로 공유",
+    "aria-label": "카카오톡으로 공유",
   },
 };
 
@@ -82,6 +82,6 @@ export const LinkButton: Story = {
   args: {
     backgroundColor: "#e1e1e1",
     icon: <LinkIcon />,
-    ariaLabel: "링크 복사",
+    "aria-label": "링크 복사",
   },
 };

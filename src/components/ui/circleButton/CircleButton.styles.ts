@@ -4,10 +4,9 @@ export const Button = styled.button<{ backgroundColor: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
-  min-width: 48px;
-  min-height: 48px;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
   border: none;
   border-radius: 999px;
   background-color: ${({ backgroundColor }) => backgroundColor};
